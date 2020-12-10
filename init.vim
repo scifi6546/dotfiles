@@ -6,6 +6,29 @@ call plug#begin("~/.vim/plugged")
   Plug 'scrooloose/syntastic'
   Plug 'rust-lang/rust.vim'
   Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+      \ 'python': ['/usr/local/bin/pyls'],
+      \ 'do': 'bash install.sh',
+      \ }
+
+  " (Optional) Multi-entry selection UI.
+  Plug 'junegunn/fzf'
+  Plug 'ncm2/ncm2'
+  Plug 'roxma/nvim-yarp'
+  " enable ncm1 for all buffers
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+  "
+  " IMPORTANT: :help Ncm2PopupOpen for more information
+  set completeopt=noinsert,menuone,noselect
+
+  " NOTE: you need to install completion sources
+  "                 to get completions. Check
+  "                     " our wiki page for a list of sources:
+  "                     https://github.com/ncm2/ncm2/wiki
+                           Plug 'ncm2/ncm2-bufword'
+                               Plug 'ncm2/ncm2-path'
   call plug#end()"Config Section
   if (has("termguicolors"))
 	   set termguicolors
@@ -33,3 +56,4 @@ call plug#begin("~/.vim/plugged")
    let g:syntastic_check_on_wq = 0
    set number
    let g:NERDTreeGitStatusUseNerdFonts = 1
+   let g:rustfmt_autosave = 1
