@@ -10,6 +10,8 @@ call plug#begin("~/.vim/plugged")
   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
   " Loads snippets
   Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+  "colorscheme
+  Plug 'kaicataldo/material.vim',{'branch':'main'}
 
 
 
@@ -82,11 +84,10 @@ let g:deoplete#enable_at_startup = 1
    let g:NERDTreeGitStatusUseNerdFonts = 1
    let g:rustfmt_autosave = 1
    nmap <c-a> :tabnew +:term <cr>
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
+   colorscheme material
+   " For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
+" Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
+" https://github.com/neovim/neovim/wiki/Following-HEAD#20160511
+if (has('termguicolors'))
+  set termguicolors
+endif
