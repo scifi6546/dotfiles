@@ -1,18 +1,30 @@
 set guifont=Fira\ Code\ Nerd\ Font,\ Retina:h14
+"hybrid line numbers
+set number relativenumber
 
 call plug#begin("~/.vim/plugged")
   " Plugin Section
 "  Plug 'dracula/vim'
+
+  " For snippets and completion
+  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+  " Loads snippets
+  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
+
+
   Plug 'scrooloose/nerdtree'
   Plug 'ryanoasis/vim-devicons'
   Plug 'rust-lang/rust.vim'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-      \ 'python': ['/usr/local/bin/pyls'],
-      \ 'do': 'bash install.sh',
-      \ }
+  Plug 'neovim/nvim-lspconfig'
+  " Plug 'autozimu/LanguageClient-neovim', {
+  "     \ 'branch': 'next',
+  "     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+  "     \ 'python': ['/usr/local/bin/pyls'],
+  "     \ 'do': 'bash install.sh',
+  "     \ }
+ "  Plug 'vim-syntastic/syntastic'
 
 
   " (Optional) Multi-entry selection UI.
@@ -30,6 +42,11 @@ call plug#begin("~/.vim/plugged")
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
   call plug#end()"Config Section
+lua << EOF
+local nvim_lsp = require('lspconfig')
+require'lspconfig'.rust_analyzer.setup{}
+EOF
+let g:coq_settings = { 'auto_start': v:true }
 let g:deoplete#enable_at_startup = 1
   " enable ncm1 for all buffers
   autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -65,4 +82,11 @@ let g:deoplete#enable_at_startup = 1
    let g:NERDTreeGitStatusUseNerdFonts = 1
    let g:rustfmt_autosave = 1
    nmap <c-a> :tabnew +:term <cr>
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
